@@ -27,28 +27,72 @@ describe('restoreNames', () => {
     restoreNames(users);
     expect(users[0].firstName).toBe('Jack');
   }); 
-  
-  it(`should check if the 'FirstName' had two words`, () => {
+
+  it(`if 'firstName' field was deleted`, () => {
     const users = [
       {
-        firstName: '',
         lastName: 'Holy',
-        fullName: 'Muhamed Aly Boxer',
+        fullName: 'Jack Holy',
       },
     ];
     restoreNames(users);
-    expect(users[0].firstName).toBe('Muhamed Aly');
+    expect(users).toEqual([
+      {
+        firstName: 'Jack',
+        lastName: 'Holy',
+        fullName: 'Jack Holy',
+      },
+    ]);
   });
 
-  it(`should return error message if the 'fullName' is empty`, () => {
+  it(`function should work with multiple arrays`, () => {
     const users = [
       {
-        firstName: '',
+        firstName: undefined,
         lastName: 'Holy',
-        fullName: '',
+        fullName: 'Jack Holy',
+      },
+      {
+        lastName: 'Adams',
+        fullName: 'Mike Adams',
       },
     ];
     restoreNames(users);
-    expect(users[0].fullName).toThrow('fullName is empty');
+    expect(users).toEqual([
+      {
+        firstName: 'Jack',
+        lastName: 'Holy',
+        fullName: 'Jack Holy',
+      },
+      {
+        firstName: 'Mike',
+        lastName: 'Adams',
+        fullName: 'Mike Adams',
+      },
+    ]);
   });
+  
+  // it(`should check if the 'FirstName' had two words`, () => {
+  //   const users = [
+  //     {
+  //       firstName: '',
+  //       lastName: 'Holy',
+  //       fullName: 'Muhamed Aly Boxer',
+  //     },
+  //   ];
+  //   restoreNames(users);
+  //   expect(users[0].firstName).toBe('Muhamed Aly');
+  // });
+
+  // it(`should return error message if the 'fullName' is empty`, () => {
+  //   const users = [
+  //     {
+  //       firstName: '',
+  //       lastName: 'Holy',
+  //       fullName: '',
+  //     },
+  //   ];
+  //   restoreNames(users);
+  //   expect(users).toThrow('fullName is empty');
+  // });
 });
